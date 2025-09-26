@@ -3,6 +3,7 @@ package org.example.maquinaPropia
 
 
 
+
 object MaquinaCafe{
     public var estadoActual: EstadosMaquina = EstadosMaquina.EsperandoDinero(0.0)
     private var tieneVaso: Boolean = true
@@ -12,19 +13,7 @@ object MaquinaCafe{
 
         when (estadoActual) {
             is EstadosMaquina.EsperandoDinero -> {
-                contadorLimpieza++
-                if (contadorLimpieza >= 5) {
-                    println("La máquina necesita limpieza. Estado: $estadoActual")
-                    estadoActual = EstadosMaquina.ErrorLimpieza
-                    return
-                }
-                (estadoActual as EstadosMaquina.EsperandoDinero).dinero += dinero
-                if ( (estadoActual as EstadosMaquina.EsperandoDinero).dinero >= 1.0) {
-                    println("Dinero suficiente")
-                    estadoActual = EstadosMaquina.EsperandoInstruccion(eleccion)
-                } else {
-                    println("Por favor, inserta al menos 1.0 unidad de dinero.")
-                }
+
             }
             is EstadosMaquina.EsperandoInstruccion -> {
 
