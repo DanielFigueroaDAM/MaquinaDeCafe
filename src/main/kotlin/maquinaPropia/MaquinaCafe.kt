@@ -6,8 +6,6 @@ package org.example.maquinaPropia
 
 object MaquinaCafe{
     public var estadoActual: EstadosMaquina = EstadosMaquina.EsperandoDinero(0.0)
-    private var tieneVaso: Boolean = true
-    private var contadorLimpieza: Int = 0
     fun makeCoffee(dinero: Double = 0.0, eleccion: Int = 0, retirarVaso: Boolean = false, limpiar: Boolean = false){
         println("Estado actual: $estadoActual")
 
@@ -17,16 +15,7 @@ object MaquinaCafe{
             }
             is EstadosMaquina.EsperandoInstruccion -> {
 
-                (estadoActual as EstadosMaquina.EsperandoInstruccion).eleccion = eleccion
-                println("Has seleccionado la opción: $eleccion")
-                if (eleccion in 1..3) {
-                    println("Preparando tu café...")
-                    estadoActual = EstadosMaquina.Elaborando()
-                    estadoActual = EstadosMaquina.EsperandoExtraccion()
-                    println("¡Café listo! Por favor, recoge tu café.")
-                } else {
-                    println("Elección inválida. Por favor, elige 1, 2 o 3.")
-                }
+
             }
             is EstadosMaquina.Elaborando -> {
                 println("¡Espera! La máquina ya está haciendo café.")
