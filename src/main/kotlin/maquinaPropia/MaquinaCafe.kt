@@ -6,11 +6,18 @@ package org.example.maquinaPropia
 object MaquinaCafe{
     public var estadoActual: EstadosMaquina = EstadosMaquina.EsperandoDinero(0.0)
     private var tieneVaso: Boolean = true
-    fun makeCoffee(dinero: Double = 0.0, eleccion: Int = 0, retirarVaso: Boolean = false){
+    private var contadorLimpieza: Int = 0
+    fun makeCoffee(dinero: Double = 0.0, eleccion: Int = 0, retirarVaso: Boolean = false, limpiar: Boolean = false){
         println("Estado actual: $estadoActual")
 
         when (estadoActual) {
             is EstadosMaquina.EsperandoDinero -> {
+                contadorLimpieza++
+                if (contadorLimpieza >= 5) {
+                    println("La máquina necesita limpieza. Estado: $estadoActual")
+                    estadoActual = EstadosMaquina.ErrorLimpieza
+                    return
+                }
                 (estadoActual as EstadosMaquina.EsperandoDinero).dinero += dinero
                 if ( (estadoActual as EstadosMaquina.EsperandoDinero).dinero >= 1.0) {
                     println("Dinero suficiente")
@@ -35,6 +42,7 @@ object MaquinaCafe{
             is EstadosMaquina.Elaborando -> {
                 println("¡Espera! La máquina ya está haciendo café.")
                 Thread.sleep(2000)
+
                 tieneVaso = true
             }
             is EstadosMaquina.EsperandoExtraccion -> {
@@ -44,6 +52,17 @@ object MaquinaCafe{
                 }else{
                     println("chaos")
                     estadoActual = EstadosMaquina.EsperandoDinero(0.0)
+                }
+            }
+            is EstadosMaquina.ErrorLimpieza -> {
+                println("La máquina necesita limpieza. Por favor, limpia la máquina.")
+                if (limpiar) {
+                    println("Limpiando la máquina...")
+                    estadoActual = EstadosMaquina.EsperandoDinero(0.0)
+                    println("Máquina limpia. Estado: $estadoActual")
+                    contadorLimpieza = 0
+                } else {
+                    println("La máquina sigue sucia. No se puede hacer café.")
                 }
             }
 

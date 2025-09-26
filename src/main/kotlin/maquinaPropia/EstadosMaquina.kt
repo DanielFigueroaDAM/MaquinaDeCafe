@@ -21,4 +21,9 @@ sealed class EstadosMaquina{
             return "EsperandoExtraccion"
         }
     }
+    object ErrorLimpieza : EstadosMaquina(){
+        override fun toString(): String {
+            return "ErrorLimpieza"
+        }
+    }
 }
