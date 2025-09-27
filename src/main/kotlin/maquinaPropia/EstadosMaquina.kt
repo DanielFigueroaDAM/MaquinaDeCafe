@@ -10,16 +10,18 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
 
     private var tieneVaso: Boolean = true
     private var contadorLimpieza: Int = 0
+    private var dineroMaquina: Double = 0.0
+    private var estáLimipia: Boolean = true
     class EsperandoDinero(var dinero: Double) : EstadosMaquina(){
         override fun onEnter(maquinaCafe: MaquinaCafe) {
             contadorLimpieza++
             if (contadorLimpieza >= 5) {
                 println("La máquina necesita limpieza. Estado: $estadoActual")
-                estadoActual = EstadosMaquina.ErrorLimpieza
+                set MaquinaEstado(EstadosMaquina.ErrorLimpieza)
                 return
             }
-            (estadoActual as EstadosMaquina.EsperandoDinero).dinero += dinero
-            if ( (estadoActual as EstadosMaquina.EsperandoDinero).dinero >= 1.0) {
+            dineroMaquina += dinero
+            if ( dineroMaquina >= 1.0) {
                 println("Dinero suficiente")
                 setMaquinaEstado(EstadosMaquina.EsperandoInstruccion())
             } else {
@@ -48,16 +50,46 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
         }
     }
     class Elaborando() : EstadosMaquina(){
+        fun onEnter(maquinaCafe: MaquinaCafe) {
+            println("¡Espera! La máquina ya está haciendo café.")
+            Thread.sleep(2000)
+            tieneVaso = true
+
+        }
         override fun toString(): String {
             return "Elaborando"
         }
     }
     class EsperandoExtraccion() : EstadosMaquina(){
+        override fun onEnter(maquinaCafe: MaquinaCafe) {
+            tieneVaso = retirarVaso
+            if(!tieneVaso){
+                println("Retire su café. ¡Disfrútalo!")
+            }else{
+                println("chaos")
+                estadoActual = EstadosMaquina.EsperandoDinero(0.0)
+            }
+        }
         override fun toString(): String {
             return "EsperandoExtraccion"
         }
     }
-    object ErrorLimpieza : EstadosMaquina(){
+    class ErrorLimpieza(var seLimpio: Boolean) : EstadosMaquina(){
+        override
+        fun onEnter (maquinaCafe: MaquinaCafe){
+            println("La máquina necesita limpieza. Por favor, limpia la máquina.")
+            if (seLimpio) {
+                println("Limpiando la máquina...")
+                estáLimipia = true
+                println("Máquina limpia. Estado: $estadoActual")
+                contadorLimpieza = 0
+                setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.0))
+
+            } else {
+                println("La máquina sigue sucia. No se puede hacer café.")
+            }
+        }
+
         override fun toString(): String {
             return "ErrorLimpieza"
         }
