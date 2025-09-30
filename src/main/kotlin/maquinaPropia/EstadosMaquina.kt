@@ -12,7 +12,6 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
 
     protected var tieneVaso: Boolean = true
     protected var contadorLimpieza: Int = 0
-    protected var dineroMaquina: Double = 0.0
     protected var estáLimipia: Boolean = true
     protected var instruccion : Int = 0
     class EsperandoDinero(var dinero: Double) : EstadosMaquina(){
@@ -23,8 +22,8 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
                 MaquinaCafe.setMaquinaEstado(ErrorLimpieza(false))
                 return
             }
-            dineroMaquina += dinero
-            if ( dineroMaquina >= 1.0) {
+            MaquinaCafe.dineroMaquina += dinero
+            if ( MaquinaCafe.dineroMaquina >= 1.0) {
                 println("Dinero suficiente")
                 MaquinaCafe.setMaquinaEstado(EsperandoInstruccion())
             } else {

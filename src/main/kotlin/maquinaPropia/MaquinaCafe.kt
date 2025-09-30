@@ -5,6 +5,7 @@ package org.example.maquinaPropia
 
 
 object MaquinaCafe{
+    public var dineroMaquina: Double = 0.0
     public var estadoActual: EstadosMaquina = EstadosMaquina.EsperandoDinero(0.0)
 
     init {
