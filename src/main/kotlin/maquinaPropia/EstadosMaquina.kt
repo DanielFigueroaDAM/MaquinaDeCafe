@@ -1,5 +1,7 @@
 package org.example.maquinaPropia
 
+import org.example.maquinaPropia.MaquinaCafe.estadoActual
+
 
 interface EntradaMaquinaCafe{
     fun onEnter(maquinaCafe: MaquinaCafe)
@@ -8,22 +10,23 @@ interface EntradaMaquinaCafe{
 
 sealed class EstadosMaquina: EntradaMaquinaCafe {
 
-    private var tieneVaso: Boolean = true
-    private var contadorLimpieza: Int = 0
-    private var dineroMaquina: Double = 0.0
-    private var estáLimipia: Boolean = true
+    protected var tieneVaso: Boolean = true
+    protected var contadorLimpieza: Int = 0
+    protected var dineroMaquina: Double = 0.0
+    protected var estáLimipia: Boolean = true
+    protected var instruccion : Int = 0
     class EsperandoDinero(var dinero: Double) : EstadosMaquina(){
         override fun onEnter(maquinaCafe: MaquinaCafe) {
             contadorLimpieza++
             if (contadorLimpieza >= 5) {
                 println("La máquina necesita limpieza. Estado: $estadoActual")
-                set MaquinaEstado(EstadosMaquina.ErrorLimpieza)
+                MaquinaCafe.setMaquinaEstado(ErrorLimpieza(false))
                 return
             }
             dineroMaquina += dinero
             if ( dineroMaquina >= 1.0) {
                 println("Dinero suficiente")
-                setMaquinaEstado(EstadosMaquina.EsperandoInstruccion())
+                MaquinaCafe.setMaquinaEstado(EsperandoInstruccion())
             } else {
                 println("Por favor, inserta al menos 1.0 unidad de dinero.")
             }
@@ -38,9 +41,9 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
             println("Has seleccionado la opción: $eleccion")
             if (eleccion in 1..3) {
                 println("Preparando tu café...")
-                setMaquinaEstado(EstadosMaquina.Elaborando())
-                setMaquinaEstado(EstadosMaquina.EsperandoExtraccion())
-                println("¡Café listo! Por favor, recoge tu café.")
+                MaquinaCafe.setMaquinaEstado((Elaborando()))
+
+
             } else {
                 println("Elección inválida. Por favor, elige 1, 2 o 3.")
             }
@@ -50,24 +53,25 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
         }
     }
     class Elaborando() : EstadosMaquina(){
-        fun onEnter(maquinaCafe: MaquinaCafe) {
+        override fun onEnter(maquinaCafe: MaquinaCafe) {
             println("¡Espera! La máquina ya está haciendo café.")
             Thread.sleep(2000)
             tieneVaso = true
+            MaquinaCafe.setMaquinaEstado(EsperandoExtraccion(false))
 
         }
         override fun toString(): String {
             return "Elaborando"
         }
     }
-    class EsperandoExtraccion() : EstadosMaquina(){
+    class EsperandoExtraccion(var retirarVaso: Boolean) : EstadosMaquina(){
         override fun onEnter(maquinaCafe: MaquinaCafe) {
             tieneVaso = retirarVaso
             if(!tieneVaso){
-                println("Retire su café. ¡Disfrútalo!")
+                println("¡Café listo! Por favor, recoge tu café.")
             }else{
                 println("chaos")
-                estadoActual = EstadosMaquina.EsperandoDinero(0.0)
+                MaquinaCafe.setMaquinaEstado(EsperandoDinero(0.0) )
             }
         }
         override fun toString(): String {
@@ -83,7 +87,7 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
                 estáLimipia = true
                 println("Máquina limpia. Estado: $estadoActual")
                 contadorLimpieza = 0
-                setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.0))
+                MaquinaCafe.setMaquinaEstado(EsperandoDinero(0.0))
 
             } else {
                 println("La máquina sigue sucia. No se puede hacer café.")
