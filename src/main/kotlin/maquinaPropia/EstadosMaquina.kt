@@ -41,8 +41,8 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
             if (eleccion in 1..3) {
                 println("Preparando tu café...")
                 MaquinaCafe.setMaquinaEstado((Elaborando()))
-
-
+            }else if(eleccion == 0){
+                println("Por favor, elige una opción: 1. Espresso, 2. Latte, 3. Cappuccino")
             } else {
                 println("Elección inválida. Por favor, elige 1, 2 o 3.")
             }
