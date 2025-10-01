@@ -1,1 +1,1 @@
-![DiagramaCafé](./src/main/diagramaCaféEstados.png)
+![DiagramaCafé](./diagramaCaféEstados.png)
