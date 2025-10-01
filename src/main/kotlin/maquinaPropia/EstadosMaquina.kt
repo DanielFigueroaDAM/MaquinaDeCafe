@@ -1,3 +1,4 @@
+
 package org.example.maquinaPropia
 
 import org.example.maquinaPropia.MaquinaCafe.estadoActual

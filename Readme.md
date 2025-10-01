@@ -1,0 +1,1 @@
+![DiagramaCafé](./src/main/diagramaCaféEstados.png)
