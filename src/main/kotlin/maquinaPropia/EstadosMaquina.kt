@@ -37,7 +37,9 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
     }
     class EsperandoInstruccion(var eleccion: Int = 0) : EstadosMaquina() {
         override fun onEnter(maquinaCafe: MaquinaCafe) {
-            println("Has seleccionado la opción: $eleccion")
+            if (eleccion != 0) {
+                println("Has seleccionado la opción: $eleccion")
+            }
             if (eleccion in 1..3) {
                 println("Preparando tu café...")
                 MaquinaCafe.setMaquinaEstado((Elaborando()))
@@ -65,6 +67,7 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
     }
     class EsperandoExtraccion(var retirarVaso: Boolean) : EstadosMaquina(){
         override fun onEnter(maquinaCafe: MaquinaCafe) {
+            MaquinaCafe.dineroMaquina -= 1.0
             tieneVaso = retirarVaso
             if(!tieneVaso){
                 println("¡Café listo! Por favor, recoge tu café.")
