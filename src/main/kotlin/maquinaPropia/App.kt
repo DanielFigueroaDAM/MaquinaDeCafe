@@ -1,35 +1,34 @@
 package org.example.maquinaPropia
 
-fun main (){
+fun main () {
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(1.0))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoInstruccion(3))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoExtraccion(false))
-    MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.5))
+
     println("-------------------------------------------------------------------")
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(1.0))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoInstruccion(3))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoExtraccion(false))
-    MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.5))
+
     println("-------------------------------------------------------------------")
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(1.0))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoInstruccion(3))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoExtraccion(false))
-    MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.5))
+
     println("-------------------------------------------------------------------")
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(1.0))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoInstruccion(3))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoExtraccion(false))
-    MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.5))
+
     println("-------------------------------------------------------------------")
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(1.0))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoInstruccion(3))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoExtraccion(false))
-    MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.5))
+
     println("-------------------------------------------------------------------")
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.ErrorLimpieza(true))
     println("-------------------------------------------------------------------")
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(1.0))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoInstruccion(3))
     MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoExtraccion(false))
-    MaquinaCafe.setMaquinaEstado(EstadosMaquina.EsperandoDinero(0.5))
 }

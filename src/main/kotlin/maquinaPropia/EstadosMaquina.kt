@@ -16,7 +16,6 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
         override fun onEnter(maquinaCafe: MaquinaCafe) {
 
             if (MaquinaCafe.contadorLimpieza >= 5) {
-                println("La máquina necesita limpieza. Estado: $estadoActual")
                 MaquinaCafe.setMaquinaEstado(ErrorLimpieza(false))
                 return
             }
@@ -82,9 +81,10 @@ sealed class EstadosMaquina: EntradaMaquinaCafe {
     class ErrorLimpieza(var seLimpio: Boolean = false) : EstadosMaquina(){
         override
         fun onEnter (maquinaCafe: MaquinaCafe){
+
             estáLimipia = false
             if (!estáLimipia && !seLimpio)
-                println("La máquina necesita limpieza. Por favor, limpia la máquina.")
+                println("La máquina necesita limpieza. Estado: $estadoActual")
             if (seLimpio) {
                 println("Limpiando la máquina...")
                 estáLimipia = true
