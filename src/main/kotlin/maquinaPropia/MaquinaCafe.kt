@@ -7,7 +7,8 @@ package org.example.maquinaPropia
 object MaquinaCafe{
     public var dineroMaquina: Double = 0.0
     public var estadoActual: EstadosMaquina = EstadosMaquina.EsperandoDinero(0.0)
-
+    public var tieneVaso: Boolean = true
+    public var contadorLimpieza: Int = 0
     init {
         println("Estado actual: $estadoActual")
     }
@@ -16,12 +17,12 @@ object MaquinaCafe{
 
     private fun isValidTransition(desde: EstadosMaquina, hacia: EstadosMaquina): Boolean {
         return when (desde) {
-            is EstadosMaquina.EsperandoDinero -> hacia is EstadosMaquina.EsperandoInstruccion || hacia is EstadosMaquina.EsperandoDinero
+            is EstadosMaquina.EsperandoDinero -> hacia is EstadosMaquina.EsperandoInstruccion || hacia is EstadosMaquina.EsperandoDinero || hacia is EstadosMaquina.ErrorLimpieza
             is EstadosMaquina.EsperandoInstruccion -> hacia is EstadosMaquina.Elaborando || hacia is EstadosMaquina.EsperandoInstruccion
             is EstadosMaquina.Elaborando -> hacia is EstadosMaquina.EsperandoExtraccion
             is EstadosMaquina.EsperandoExtraccion ->
                 hacia is EstadosMaquina.EsperandoDinero || hacia is EstadosMaquina.ErrorLimpieza || hacia is EstadosMaquina.EsperandoExtraccion
-            is EstadosMaquina.ErrorLimpieza -> hacia is EstadosMaquina.EsperandoDinero
+            is EstadosMaquina.ErrorLimpieza -> (hacia is EstadosMaquina.EsperandoDinero && contadorLimpieza == 0) || hacia is EstadosMaquina.ErrorLimpieza
             else -> false
         }
     }
